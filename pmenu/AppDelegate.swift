@@ -19,10 +19,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        let input = FileHandle.standardInput
+//        let input = FileHandle.standardInput
 
-        let text = String(bytes: input.availableData, encoding: .utf8)
-        
+//        let text = String(bytes: input.availableData, encoding: .utf8)
+        let text = "nice"
         // Create the SwiftUI view that provides the window contents.
         let contentView = ContentView(stdin: text)
 

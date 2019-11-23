@@ -9,24 +9,20 @@
 import SwiftUI
 import AppKit
 
-struct FilteringTextView: NSViewRepresentable {
-    private let tmpView = FilteringTextField()
+struct FilteringTextView: NSViewControllerRepresentable {
+    private let vc = FilteringTextViewController()
     var placeholderString: String
     var changeHandler: ((String)->Void)?
     
-    func makeNSView(context: NSViewRepresentableContext<FilteringTextView>) -> FilteringTextField {
-        tmpView.delegate = tmpView
-        tmpView.placeholderString = placeholderString
-        tmpView.textFieldChangedHandler = changeHandler
-        return tmpView
+    func makeNSViewController(context: NSViewControllerRepresentableContext<FilteringTextView>) -> NSViewController {
+        vc.placeholderString = placeholderString
+        vc.textFieldChangedHandler = changeHandler
+        return vc
     }
     
-    func updateNSView(_ uiView: FilteringTextField, context: NSViewRepresentableContext<FilteringTextView>) {
-//            if uiView.acceptsFirstResponder {
-//                uiView.becomeFirstResponder()
-//            }
-        uiView.setContentHuggingPriority(.defaultHigh, for: .vertical)
-        uiView.setContentHuggingPriority(.defaultLow, for: .horizontal)
+    func updateNSViewController(_ nsViewController: NSViewController, context: NSViewControllerRepresentableContext<FilteringTextView>) {
+        
     }
+
 }
 

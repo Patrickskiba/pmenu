@@ -9,8 +9,21 @@ import SwiftUI
 import AppKit
 
 class FilteringTextViewController: NSViewController {
+    let textfield = FilteringTextField()
+
+    var textFieldChangedHandler: ((String)->Void)?
+    var placeholderString: String = ""
+
+
+    
+    override func loadView() {
+        textfield.textFieldChangedHandler = textFieldChangedHandler
+        textfield.placeholderString = placeholderString
+        self.view = textfield
+    }
+    
     override func viewDidAppear() {
-        
+        textfield.becomeFirstResponder()
     }
 }
 
