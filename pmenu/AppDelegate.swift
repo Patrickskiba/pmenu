@@ -16,15 +16,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     var window: NSWindow!
     
-
-
     func applicationDidFinishLaunching(_ aNotification: Notification) {
 //        let input = FileHandle.standardInput
-
 //        let text = String(bytes: input.availableData, encoding: .utf8)
-        let text = "nice"
-        // Create the SwiftUI view that provides the window contents.
-        let contentView = ContentView(stdin: text)
+        
+        let text = "Applications\nCode\nDesktop\nDocuments\nDownloads\nLibrary\nMovies\nMusic\nPictures\nPublic\npmenu\n"
+                        
+        let stdin = (text ?? "").components(separatedBy: .newlines).filter({(entry) in
+            return !entry.isEmpty
+        })
+        
+        let contentView = ContentView(stdin: stdin)
 
         // Create the window and set the content view. 
         window = NSWindow(
@@ -40,7 +42,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
     }
-
 
 }
 

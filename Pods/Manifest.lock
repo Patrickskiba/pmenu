@@ -1,0 +1,16 @@
+PODS:
+  - Fuse (1.2.0)
+
+DEPENDENCIES:
+  - Fuse
+
+SPEC REPOS:
+  trunk:
+    - Fuse
+
+SPEC CHECKSUMS:
+  Fuse: 287bd95a5c8dbfe6c41af519eaf48856aa1a28f6
+
+PODFILE CHECKSUM: b0a1550ce00a4876f50f92c3f539a0e9f01a7573
+
+COCOAPODS: 1.8.4
