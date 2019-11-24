@@ -21,6 +21,9 @@ struct ContentView: View {
     var stdin: [String]
     @State private var results: [Fuse.SearchResult] = []
     @State private var list: [Result] = []
+    
+    @State private var selected: UUID = UUID()
+    @State private var selectedIdx: Int = 0
 
     var body: some View {
         return VStack(alignment: .leading) {
@@ -30,6 +33,7 @@ struct ContentView: View {
                         self.list = Array(0...self.stdin.count - 1).map({ ( line ) in
                             Result(name: self.stdin[line])
                         })
+                        self.selected = self.list[self.selectedIdx].id
                     })
                 } else {
                     self.results = self.fuse.search(change, in: self.stdin)
@@ -39,20 +43,31 @@ struct ContentView: View {
                         }).map({ ( line ) in
                             Result(name: self.stdin[line])
                         })
+                        self.selected = self.list[self.selectedIdx].id
                     })
                 }
             }, endedEditing: {() in
                 FileHandle.standardOutput.write(self.list[0].name.data(using: .utf8)!)
+                exit(0)
             }).onAppear(perform: {() in
                 self.list = Array(0...self.stdin.count - 1).map({ ( line ) in
                     Result(name: self.stdin[line])
                 })
-            })
-                .frame(height: 20)
+                
+                self.selected = self.list[self.selectedIdx].id
+            }).frame(height: 20)
             
             List {
-                ForEach(list) { text in
-                    Text(text.name)
+                ForEach(list) { (text) in
+                    if ( self.selected == text.id ) {
+                        VStack() {
+                            Text(text.name)
+                        }.background(Color.blue)
+                    } else {
+                        VStack() {
+                            Text(text.name)
+                        }
+                    }
                 }
             }
             
