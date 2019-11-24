@@ -13,10 +13,13 @@ struct FilteringTextView: NSViewControllerRepresentable {
     private let vc = FilteringTextViewController()
     var placeholderString: String
     var changeHandler: ((String)->Void)?
+    var endedEditing: (() -> Void)?
+
     
     func makeNSViewController(context: NSViewControllerRepresentableContext<FilteringTextView>) -> NSViewController {
         vc.placeholderString = placeholderString
         vc.textFieldChangedHandler = changeHandler
+        vc.textFieldEditingEndedHandler = endedEditing
         return vc
     }
     

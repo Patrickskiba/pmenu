@@ -41,11 +41,14 @@ struct ContentView: View {
                         })
                     })
                 }
+            }, endedEditing: {() in
+                FileHandle.standardOutput.write(self.list[0].name.data(using: .utf8)!)
             }).onAppear(perform: {() in
                 self.list = Array(0...self.stdin.count - 1).map({ ( line ) in
                     Result(name: self.stdin[line])
                 })
-            }).frame(height: 20)
+            })
+                .frame(height: 20)
             
             List {
                 ForEach(list) { text in

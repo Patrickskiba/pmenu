@@ -37,6 +37,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         window.setFrameAutosaveName("Main Window")
         window.contentView = NSHostingView(rootView: contentView)
         window.makeKeyAndOrderFront(nil)
+        window.level = .floating
+        window.orderFrontRegardless()
+        NSApplication.shared.activate(ignoringOtherApps: true)
+
+
+
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {

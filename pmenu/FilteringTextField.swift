@@ -12,12 +12,15 @@ class FilteringTextViewController: NSViewController {
     let textfield = FilteringTextField()
 
     var textFieldChangedHandler: ((String)->Void)?
+    var textFieldEditingEndedHandler: (() -> Void)?
+
     var placeholderString: String = ""
 
 
     
     override func loadView() {
         textfield.textFieldChangedHandler = textFieldChangedHandler
+        textfield.textFieldEditingEndedHandler = textFieldEditingEndedHandler
         textfield.placeholderString = placeholderString
         self.view = textfield
     }
@@ -29,6 +32,13 @@ class FilteringTextViewController: NSViewController {
 
 class FilteringTextField: NSTextField, NSTextFieldDelegate {
     var textFieldChangedHandler: ((String)->Void)?
+    var textFieldEditingEndedHandler: (() -> Void)?
+    
+    override func textDidEndEditing(_ notification: Notification) {
+        if let endedEditing = textFieldEditingEndedHandler {
+            endedEditing()
+        }
+    }
     
     override func textDidChange(_ notification: Notification) {
         if let textObject = (notification.object as? NSTextView) {
