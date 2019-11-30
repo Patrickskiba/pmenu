@@ -38,11 +38,14 @@ struct ContentView: View {
                 } else {
                     self.results = self.fuse.search(change, in: self.stdin)
                     DispatchQueue.main.asyncAfter(deadline: .now(), execute: { () in
-                        self.list = self.results.map({ item in
-                            return item.index
-                        }).map({ ( line ) in
-                            Result(name: self.stdin[line])
-                        })
+                        if (self.results.count == 0) {
+                            self.list = [Result(name: "none")]
+                           
+                        } else {
+                            self.list = self.results.map({ ( item ) in
+                                Result(name: self.stdin[item.index])
+                            })
+                        }
                         self.selected = self.list[self.selectedIdx].id
                     })
                 }
