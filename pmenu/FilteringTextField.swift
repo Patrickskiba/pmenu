@@ -40,6 +40,12 @@ class FilteringTextViewController: NSViewController {
             return false
         }
         
+        if (event.modifierFlags.rawValue == 1048840) {
+            if (event.charactersIgnoringModifiers == "q") {
+                return true
+            }
+        }
+        
         return false
     }
     

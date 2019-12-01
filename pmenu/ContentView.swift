@@ -28,6 +28,7 @@ struct ContentView: View {
     var body: some View {
         return VStack(alignment: .leading) {
             FilteringTextView(placeholderString: "command", changeHandler: { (change) in
+                self.selectedIdx = 0
                 if ( change == "" ) {
                     DispatchQueue.main.asyncAfter(deadline: .now(), execute: { () in
                         self.list = Array(0...self.stdin.count - 1).map({ ( line ) in
@@ -53,7 +54,15 @@ struct ContentView: View {
                 FileHandle.standardOutput.write(self.list[0].name.data(using: .utf8)!)
                 exit(0)
             }, eventTriggered: {(event) in
-                print(event)
+                if ( event == "next" && self.selectedIdx < self.list.count - 1) {
+                    self.selectedIdx += 1
+                    self.selected = self.list[self.selectedIdx].id
+                }
+                
+                if ( event == "prev" && self.selectedIdx > 0) {
+                    self.selectedIdx -= 1
+                    self.selected = self.list[self.selectedIdx].id
+                }
             }).onAppear(perform: {() in
                 self.list = Array(0...self.stdin.count - 1).map({ ( line ) in
                     Result(name: self.stdin[line])
