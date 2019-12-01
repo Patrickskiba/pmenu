@@ -12,14 +12,16 @@ import AppKit
 struct FilteringTextView: NSViewControllerRepresentable {
     private let vc = FilteringTextViewController()
     var placeholderString: String
-    var changeHandler: ((String)->Void)?
+    var changeHandler: ((String) -> Void)?
     var endedEditing: (() -> Void)?
+    var eventTriggered: ((String) -> Void)?
 
     
     func makeNSViewController(context: NSViewControllerRepresentableContext<FilteringTextView>) -> NSViewController {
         vc.placeholderString = placeholderString
         vc.textFieldChangedHandler = changeHandler
         vc.textFieldEditingEndedHandler = endedEditing
+        vc.vcEvent = eventTriggered
         return vc
     }
     

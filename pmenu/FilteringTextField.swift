@@ -13,18 +13,31 @@ class FilteringTextViewController: NSViewController {
 
     var textFieldChangedHandler: ((String)->Void)?
     var textFieldEditingEndedHandler: (() -> Void)?
+    var vcEvent: ((String) -> Void)?
 
     var placeholderString: String = ""
     
     func keyPressed(with event: NSEvent) -> Bool {
         print(event.modifierFlags)
 
+        if (event.modifierFlags.rawValue == 256 ) {
+            return true
+        }
+        
         if (event.modifierFlags.rawValue == 131330 ) {
             return true
         }
         
-        if (event.modifierFlags.rawValue == 256 ) {
-            return true
+        if (event.modifierFlags.rawValue) == 262401 {
+            if let callEvent = vcEvent {
+                if (event.charactersIgnoringModifiers == "p") {
+                    callEvent("prev")
+                }
+                if (event.charactersIgnoringModifiers == "n") {
+                    callEvent("next")
+                }
+            }
+            return false
         }
         
         return false
