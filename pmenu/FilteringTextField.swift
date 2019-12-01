@@ -15,14 +15,37 @@ class FilteringTextViewController: NSViewController {
     var textFieldEditingEndedHandler: (() -> Void)?
 
     var placeholderString: String = ""
+    
+    func keyPressed(with event: NSEvent) -> Bool {
+        print(event.modifierFlags)
 
-
+        if (event.modifierFlags.rawValue == 131330 ) {
+            return true
+        }
+        
+        if (event.modifierFlags.rawValue == 256 ) {
+            return true
+        }
+        
+        return false
+    }
     
     override func loadView() {
         textfield.textFieldChangedHandler = textFieldChangedHandler
         textfield.textFieldEditingEndedHandler = textFieldEditingEndedHandler
         textfield.placeholderString = placeholderString
         self.view = textfield
+    }
+    
+    override func viewDidLoad() {
+        NSEvent.addLocalMonitorForEvents(matching: .keyDown) {
+            let validKey = self.keyPressed(with: $0)
+            if validKey == true {
+                return $0
+            } else {
+                return nil
+            }
+        }
     }
     
     override func viewDidAppear() {
