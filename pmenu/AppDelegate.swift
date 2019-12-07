@@ -17,10 +17,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var window: NSWindow!
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        let input = FileHandle.standardInput
-        let text = String(bytes: input.availableData, encoding: .utf8)
+//        let input = FileHandle.standardInput
+//        let text = String(bytes: input.availableData, encoding: .utf8)
         
-//        let text = "Applications\nCode\nDesktop\nDocuments\nDownloads\nLibrary\nMovies\nMusic\nPictures\nPublic\npmenu\n"
+        let text = "Applications\nCode\nDesktop\nDocuments\nDownloads\nLibrary\nMovies\nMusic\nPictures\nPublic\npmenu\n"
                         
         let stdin = (text ?? "").components(separatedBy: .newlines).filter({(entry) in
             return !entry.isEmpty

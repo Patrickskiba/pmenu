@@ -31,7 +31,8 @@ struct ContentView: View {
                 self.selectedIdx = 0
                 if ( change == "" ) {
                     DispatchQueue.main.asyncAfter(deadline: .now(), execute: { () in
-                        self.list = Array(0...self.stdin.count - 1).map({ ( line ) in
+                        let arrLength = self.stdin.count > 10 ? 10 : self.stdin.count - 1
+                        self.list = Array(0...arrLength).map({ ( line ) in
                             Result(name: self.stdin[line])
                         })
                         self.selected = self.list[self.selectedIdx].id
@@ -43,15 +44,19 @@ struct ContentView: View {
                             self.list = [Result(name: "none")]
                            
                         } else {
-                            self.list = self.results.map({ ( item ) in
+                            let _list = self.results.map({ ( item ) in
                                 Result(name: self.stdin[item.index])
                             })
+                            if (_list.count > 10) {
+                                self.list = Array(_list.prefix(upTo: 10))
+                            }
+                            self.list = _list
                         }
                         self.selected = self.list[self.selectedIdx].id
                     })
                 }
             }, endedEditing: {() in
-                FileHandle.standardOutput.write(self.list[0].name.data(using: .utf8)!)
+                FileHandle.standardOutput.write(self.list[self.selectedIdx].name.data(using: .utf8)!)
                 exit(0)
             }, eventTriggered: {(event) in
                 if ( event == "next" && self.selectedIdx < self.list.count - 1) {
@@ -64,7 +69,8 @@ struct ContentView: View {
                     self.selected = self.list[self.selectedIdx].id
                 }
             }).onAppear(perform: {() in
-                self.list = Array(0...self.stdin.count - 1).map({ ( line ) in
+                let arrLength = self.stdin.count > 10 ? 10 : self.stdin.count - 1
+                self.list = Array(0...arrLength).map({ ( line ) in
                     Result(name: self.stdin[line])
                 })
                 
