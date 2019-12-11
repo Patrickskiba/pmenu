@@ -55,9 +55,6 @@ struct ContentView: View {
                         self.selected = self.list[self.selectedIdx].id
                     })
                 }
-            }, endedEditing: {() in
-                FileHandle.standardOutput.write(self.list[self.selectedIdx].name.data(using: .utf8)!)
-                exit(0)
             }, eventTriggered: {(event) in
                 if ( event == "next" && self.selectedIdx < self.list.count - 1) {
                     self.selectedIdx += 1
@@ -67,6 +64,11 @@ struct ContentView: View {
                 if ( event == "prev" && self.selectedIdx > 0) {
                     self.selectedIdx -= 1
                     self.selected = self.list[self.selectedIdx].id
+                }
+                
+                if (event == "submit") {
+                FileHandle.standardOutput.write(self.list[self.selectedIdx].name.data(using: .utf8)!)
+                    exit(0)
                 }
             }).onAppear(perform: {() in
                 let arrLength = self.stdin.count > 10 ? 10 : self.stdin.count - 1

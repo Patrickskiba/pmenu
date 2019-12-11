@@ -1,0 +1,11 @@
+framework module Fuse {
+  umbrella header "Fuse-umbrella.h"
+
+  export *
+  module * { export * }
+}
+
+module Fuse.Swift {
+    header "Fuse-Swift.h"
+    requires objc
+}

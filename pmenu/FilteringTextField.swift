@@ -18,8 +18,24 @@ class FilteringTextViewController: NSViewController {
     var placeholderString: String = ""
     
     func keyPressed(with event: NSEvent) -> Bool {
-        print(event.modifierFlags)
-
+        if (event.keyCode == 36) {
+            if let callEvent = vcEvent {
+                callEvent("submit")
+            }
+        }
+        
+        if (event.keyCode == 126) {
+            if let callEvent = vcEvent {
+                callEvent("prev")
+            }
+        }
+        
+        if (event.keyCode == 125) {
+            if let callEvent = vcEvent {
+                callEvent("next")
+            }
+        }
+        
         if (event.modifierFlags.rawValue == 256 ) {
             return true
         }
